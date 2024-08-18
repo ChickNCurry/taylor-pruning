@@ -1,0 +1,19 @@
+services:
+  cam_server:
+#    user: 1000:1000
+    build: docker/
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
+    volumes:
+      - ./:/app
+      - /tmp:/tmp
+    ports:
+      - "5000:5000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
